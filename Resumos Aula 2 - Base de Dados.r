@@ -2,11 +2,11 @@
 
 ##### base de dados ####
 
-#idade = c(18, 20, 23, 25)
-#sexo = c("M", "F", "F", "M")
+idade = c(18, 20, 23, 25)
+sexo = c("M", "F", "F", "M")
 
-#dados = data.frame(idade,sexo)
-#dados
+dados = data.frame(idade,sexo)
+dados
 
 
 #####leitura de dados com .csv####
