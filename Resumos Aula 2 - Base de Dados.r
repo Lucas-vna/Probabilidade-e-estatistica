@@ -2,11 +2,11 @@
 
 ##### base de dados ####
 
-idade = c(18, 20, 23, 25)
-sexo = c("M", "F", "F", "M")
+#idade = c(18, 20, 23, 25)
+#sexo = c("M", "F", "F", "M")
 
-dados = data.frame(idade,sexo)
-dados
+#dados = data.frame(idade,sexo)
+#dados
 
 
 #####leitura de dados com .csv####
@@ -38,6 +38,14 @@ dados1[19,2] = "b" #-> atualiza o valor do ponto 19,2 para "b"
 #ifelse(condição<=50, se for < que 50, caso contrário)
 ifelse(dados1$fre_word<25, "numero menor que 25", "numero maior que 25")
 
+#####Medidas de posição####
 
+mean(dados1$fre_word) #média
+median(dados1$yield) #mediana
+table(dados1$fre_word) #moda
 
+#####Medidas de dispersão####
 
+var(dados1$idade) #Variância
+sd(dados1$idade)#Desvio Padrão
+sd(dados1$idade)/mean(dados1$idade)#CV
