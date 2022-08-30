@@ -31,9 +31,13 @@ dados1[1,3] #linha 1, coluna 3
 dados1[4,1] #linha 4, coluna 1
 dados1[,1] #imprime toda a coluna 1 
 dados1[1,] #imprime toda linha 1
-#dados1[4,3] = "c" -> atualiza o valor do ponto 4,3 para "c"
+dados1[19,2] = "b" #-> atualiza o valor do ponto 19,2 para "b"
 
 #####condição####
+
+#ifelse(condição<=50, se for < que 50, caso contrário)
+ifelse(dados1$fre_word<25, "numero menor que 25", "numero maior que 25")
+
 
 
 
