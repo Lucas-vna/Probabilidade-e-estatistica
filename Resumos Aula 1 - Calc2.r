@@ -82,11 +82,3 @@
 
 #integral definida
 #integrate(funcao, 0, 2)
-
-##### base de dados ####
-
-idade = c(18, 20, 23, 25)
-sexo = c("M", "F", "F", "M")
-
-dados = data.frame(idade,sexo)
-dados
