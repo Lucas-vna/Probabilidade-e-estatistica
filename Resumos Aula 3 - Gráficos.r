@@ -2,7 +2,6 @@
 
 library(ggplot2)
 
-
 #####Gráficos de Barrras/Colunas####
 
 #lendo o arquivo como números
@@ -117,3 +116,119 @@ ggplot(dados1,aes(rendimento)) + geom_histogram(bins=5, fill='black')
 
 #aes(fill=empresa)
 ggplot(dados1,aes(rendimento)) + geom_histogram(aes(fill=empresa), bins=5)
+
+#####Densidade####
+
+#histograma cmo linha e propabilidade
+ggplot(dados1, aes(rendimento)) + geom_density()
+
+#grafico por empresa - aes(fill=factor(empresa))
+ggplot(dados1, aes(rendimento)) + geom_density(aes(fill=factor(empresa))
+
+#transparencia - (alpha=)                                            
+ggplot(dados1, aes(rendimento)) + geom_density(aes(fill=factor(empresa)), alpha=0.5)
+                                              
+#####Box Plot####  
+
+#por empresa
+ggplot(dados1,aes(x=empresa, y=rendimento)) + geom_boxplot()
+
+#adicionando cor
+ggplot(dados1,aes(x=empresa, y=rendimento, fill=empresa)) + geom_boxplot()
+
+#comparando por tamanho
+ggplot(dados1,aes(x=empresa, y=rendimento, fill=empresa)) + 
+                    geom_boxplot() + facet_wrap(~tamanho)
+
+#####Violino####
+
+#mesma ideia do histograma
+ggplot(dados1, aes(x=empresa, y=rendimento, fill=empresa)) + geom_violin()
+
+#####Tree Map####
+
+library(treemapify)
+
+ggplot(dados1, aes(area=Freq, fill=empresa)) + geom_treemap()
+                                               
+#rendimento medio por tamanhoXempresa (Ga, Gb..., Pa, Pb)
+dados1$interacao = interaction(dados1$tamanho, dados1$empresa)
+dados4=as.data.frame(tapply(dados1$rendimento, dados1$interacao, mean))
+dados4
+dados4$nomes=labels(dados4[[1]])
+names(dados4)[1] = 'total'
+dados4
+
+#retira os nomes com total = NA
+dados4 = dados4[-c(5,6,12),]
+
+ggplot(dados4, aes(area=total, fill=nomes)) + geom_treemap()
+
+#####Nuvem de Letras####
+
+#dados com palavras
+dados4=dados1[,6:7] 
+dados4
+library(wordcloud2)
+wordcloud2(data=dados4, size=1.6)
+
+#####Plots Animados####
+
+#pontos e linhas
+library(gganimate)
+library(gifski)
+library(png)
+
+ggplot(dados1,aes(x=rendimento,vendas,col=empresa))+
+  geom_line()+geom_point()
+
+g=ggplot(dados1,aes(x=rendimento,vendas,col=empresa))+
+  geom_line()+geom_point()
+
+g+transition_reveal(rendimento)
+
+animate(g,renderer=gifski_renderer())
+
+#barras e colunas
+ggplot(dados1,aes(x=empresa,fill=empresa))+geom_bar()+theme_light()
+
+ggplot(dados1,aes(x=empresa,fill=empresa))+geom_bar()+theme_light()+
+  transition_states(empresa)+shadow_mark()
+
+animate(g,renderer=gifski_renderer())
+
+ggplot(dados1,aes(x=empresa,fill=empresa))+geom_bar()+theme_light()+
+  transition_states(empresa)+shadow_mark()+enter_grow()+ enter_fade()
+
+animate(g,renderer=gifski_renderer())
+
+#####Animado Dispersao####
+
+library(gapminder) #dados
+head(gapminder)
+
+#ralacao entre renda x vida
+ggplot(gapminder, aes(gdpPercap, lifeExp)) +geom_point() + theme_bw()
+
+#colorir por continente
+ggplot(gapminder, aes(gdpPercap, lifeExp, col = continent)) +geom_point() +
+  theme_bw()
+
+#tamanho do ponto de acordo com a populacao
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+  geom_point() + theme_bw()
+
+#arrumar nomes eixos
+ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+  geom_point() + theme_bw() +
+  labs(title ='Ano: {frame_time}', x ='Renda per capita', y ='Expectativa de vida')
+
+grafico=ggplot(gapminder, aes(gdpPercap, lifeExp, size = pop, color = continent)) +
+  geom_point() + theme_bw() +
+  labs(title ='Ano: {frame_time}', x ='Renda per capita', y ='Expectativa de vida') +
+  transition_time(year)
+
+animate(grafico, renderer=gifski_renderer())
+
+
+
